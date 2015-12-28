@@ -1,0 +1,125 @@
+﻿<controls:MetroWindow x:Class="LogoFX.Samples.Client.Presentation.Shell.Views.ShellView" 
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"                      
+                      xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"                                            
+                      xmlns:behaviors="clr-namespace:LogoFX.Samples.Client.Presentation.Shell.Behaviors"
+                      xmlns:viewModels="clr-namespace:LogoFX.Samples.Client.Presentation.Shell.ViewModels"
+                      xmlns:actions="clr-namespace:LogoFX.Client.Mvvm.View.Infra.Interactivity.Actions;assembly=LogoFX.Client.Mvvm.View.Infra"
+                      xmlns:markupExtensions="clr-namespace:LogoFX.Client.Mvvm.View.Infra.MarkupExtensions;assembly=LogoFX.Client.Mvvm.View.Infra"
+                      MinWidth="550" MinHeight="500"
+                      SnapsToDevicePixels="True"
+                      mc:Ignorable="d"
+                      d:DataContext="{d:DesignInstance viewModels:ShellViewModel}"
+                      TitlebarHeight="42" WindowState="Maximized">
+    
+    <controls:MetroWindow.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="SmallTextSepatator" TargetType="Rectangle">
+            <Setter Property="Width" Value="1" />
+            <Setter Property="Height" Value="14" />
+            <Setter Property="Fill" Value="#FFFFFFFF" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Geometry x:Key="SettingsIcon">M 403.195,282.74L 401.783,282.74C 401.553,283.571 401.224,284.358 400.803,285.09L 402.108,286.394C 402.944,287.229 402.944,288.583 402.108,289.419L 401.352,290.175C 400.517,291.01 399.163,291.01 398.327,290.175L 397.013,288.861C 396.285,289.276 395.5,289.6 394.673,289.825L 394.673,291.195C 394.673,292.376 393.716,293.333 392.534,293.333L 391.466,293.333C 390.284,293.333 389.326,292.376 389.326,291.195L 389.326,289.825C 388.5,289.6 387.715,289.276 386.986,288.861L 385.672,290.175C 384.837,291.01 383.483,291.01 382.648,290.175L 381.892,289.419C 381.056,288.583 381.056,287.229 381.892,286.394L 383.197,285.09C 382.776,284.358 382.447,283.571 382.216,282.74L 380.805,282.74C 379.624,282.74 378.667,281.783 378.667,280.602L 378.667,279.533C 378.667,278.351 379.624,277.394 380.805,277.394L 382.201,277.394C 382.421,276.571 382.737,275.788 383.147,275.061L 381.892,273.806C 381.056,272.971 381.056,271.617 381.892,270.781L 382.648,270.025C 383.483,269.189 384.837,269.189 385.672,270.025L 386.902,271.257C 387.655,270.818 388.467,270.476 389.326,270.242L 389.326,268.805C 389.326,267.624 390.284,266.667 391.466,266.667L 392.534,266.667C 393.716,266.667 394.673,267.624 394.673,268.805L 394.673,270.242C 395.533,270.476 396.345,270.818 397.096,271.257L 398.327,270.025C 399.163,269.189 400.517,269.189 401.352,270.025L 402.108,270.781C 402.944,271.617 402.944,272.971 402.108,273.806L 400.853,275.061C 401.263,275.788 401.578,276.571 401.799,277.394L 403.195,277.394C 404.376,277.394 405.333,278.351 405.333,279.533L 405.333,280.602C 405.333,281.783 404.376,282.74 403.195,282.74 Z M 392,274.219C 388.753,274.219 386.118,276.852 386.118,280.1C 386.118,283.348 388.753,285.981 392,285.981C 395.247,285.981 397.882,283.348 397.882,280.1C 397.882,276.852 395.247,274.219 392,274.219 Z M 392,282.706C 390.523,282.706 389.326,281.51 389.326,280.033C 389.326,278.556 390.523,277.361 392,277.361C 393.477,277.361 394.673,278.556 394.673,280.033C 394.673,281.51 393.477,282.706 392,282.706 Z</Geometry>
+    </controls:MetroWindow.Resources>
+    
+    <behaviours:StylizedBehaviors.Behaviors>
+        <behaviours:StylizedBehaviorCollection>
+            <behaviours:BorderlessWindowBehavior />
+            <behaviours:WindowsSettingBehaviour />
+            <behaviours:GlowWindowBehavior />
+        </behaviours:StylizedBehaviorCollection>
+    </behaviours:StylizedBehaviors.Behaviors>
+
+	<i:Interaction.Behaviors>
+		<behaviors:WindowConstraintsBehavior MinWidth="1024" MinHeight="800" FitDesktop="True" />
+	</i:Interaction.Behaviors>
+
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <TextBox Width="120" 
+                     Height="18"
+			         Margin="15,0" 
+                     Visibility="Collapsed" />
+            
+            <Viewbox Width="30" 
+                     Height="30" 
+                     Margin="0,0,3,0" 
+                     HorizontalAlignment="Left"
+                     ToolTip="{Binding Path=CurrentUser,Mode=OneWay}"
+                     Visibility="{Binding Path=IsLoggedIn,Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Canvas Width="48" 
+                        Height="48"
+                        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"                                     
+                        UseLayoutRounding="False">
+                    <Path Canvas.Left="12" 
+                          Canvas.Top="12" 
+                          Width="24"
+                          Height="24" 
+                          Data="F1 M 24,12C 27.5,12 29,14 28.4952,18.1979C 28.9462,18.4566 29.25,18.9428 29.25,19.5C 29.25,20.1818 28.7951,20.7574 28.1723,20.9397C 27.9121,21.8672 27.508,22.6882 27,23.3449L 27,26.5C 28.6667,26.8333 30,27 32,28C 34,29 34.6667,29.9167 36,31.25L 36,36L 12,36L 12,31.25C 13.3333,29.9167 14,29 16,28C 18,27 19.3333,26.8333 21,26.5L 21,23.3449C 20.492,22.6882 20.0879,21.8672 19.8277,20.9397C 19.2049,20.7574 18.75,20.1818 18.75,19.5C 18.75,18.9428 19.0538,18.4566 19.5048,18.1979C 19,14 20.5,12 24,12 Z "
+                          Fill="Black"
+                          Stretch="Fill" />
+                </Canvas>
+            </Viewbox>
+
+
+            <TextBlock Name="LoggedUser" Margin="15 0 0 0"
+                       VerticalAlignment="Center"
+			           Text="{Binding CurrentUser}" />
+            <Rectangle Margin="6 0"
+			           Fill="White"
+			           Style="{StaticResource SmallTextSepatator}"
+			           Visibility="{Binding Path=IsLoggedIn,Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <Button Margin="0 0 16 0"
+			        Content="{markupExtensions:LocalizedString Key=ShellView_Top_Logout,
+			                                  Fallback=Logout}"
+			        Foreground="#FFFFFFFF">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <actions:ExecuteCommandAction Command="{Binding Path=LogoutCommand}" ManageEnableState="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            
+            <Button Width="34" Height="34"
+			        Margin="0 0 16 0"
+			        IsEnabled="{Binding IsLoggedIn}"
+			        Style="{x:Null}"
+			        ToolTip="Settings">
+                <Path Width="26" 
+                      Height="26"
+				      Data="{StaticResource SettingsIcon}"
+				      Fill="#FFD1D3D4"
+				      Stretch="Fill" SnapsToDevicePixels="True" />
+                <!--<i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <navigation:NavigateAction ItemType="{x:Type viewModels:SettingsViewModel}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>-->
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*" />
+            <ColumnDefinition Width="0.2*" />
+        </Grid.ColumnDefinitions>
+
+        <controls:TransitioningContentControl x:Name="ActiveItem" 
+                                              Grid.Column="0"
+		                                      Grid.ColumnSpan="2" 
+                                              Transition="Right" />
+        <ContentControl x:Name="Message" 
+                        Grid.Column="0"
+		                Grid.ColumnSpan="2" />
+    </Grid>
+</controls:MetroWindow>
+    

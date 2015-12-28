@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="LogoFX.Samples.Client.Presentation.Shell.Compliance.Views.ComplianceList.Grid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:LogoFX.Client.Mvvm.View.Infra.Converters;assembly=LogoFX.Client.Mvvm.View.Infra"
+             mc:Ignorable="d"              
+             d:DesignHeight="300" 
+             d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />        
+    </UserControl.Resources>
+    
+    <Grid>
+        <DataGrid ItemsSource="{Binding Items}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Last Date"                                    
+                                    Binding="{Binding Path=Model.LastDate}" />
+                <DataGridTextColumn Header="Host"
+                                    Binding="{Binding Path=Model.Host}" />
+                <DataGridTextColumn Header="IP Address"
+                                    Binding="{Binding Path=Model.IpAddress}" />
+                <DataGridTextColumn Header="Object"
+                                    Binding="{Binding Path=Model.Object}" />
+                <DataGridTextColumn Header="Logged-on User"
+                                    Binding="{Binding Path=Model.LoggedOnUser.LoginName}" />
+                <DataGridTextColumn Header="Status"
+                                    Binding="{Binding Path=Model.Status, Converter={StaticResource EnumDescriptionConverter}}" />
+                <DataGridTextColumn Header="Additional Information"
+                                    Binding="{Binding Path=Model.Information}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

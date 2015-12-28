@@ -1,0 +1,157 @@
+﻿<UserControl x:Class="LogoFX.Samples.Client.Presentation.Shell.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"             
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"                          
+             xmlns:viewModels="clr-namespace:LogoFX.Samples.Client.Presentation.Shell.ViewModels"
+             xmlns:actions="clr-namespace:LogoFX.Client.Mvvm.View.Infra.Interactivity.Actions;assembly=LogoFX.Client.Mvvm.View.Infra"
+             xmlns:markupExtensions="clr-namespace:LogoFX.Client.Mvvm.View.Infra.MarkupExtensions;assembly=LogoFX.Client.Mvvm.View.Infra"
+             xmlns:behaviors="clr-namespace:LogoFX.Client.Mvvm.View.Infra.Interactivity.Behaviors;assembly=LogoFX.Client.Mvvm.View.Infra"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:LoginViewModel}"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+
+	<UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </UserControl.Resources>
+
+	<Grid>
+		<i:Interaction.Triggers>
+			<i:EventTrigger EventName="Loaded">
+				<actions:TargetedSetFocusAction TargetName="UserName" />
+			</i:EventTrigger>
+		</i:Interaction.Triggers>
+
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition Height="300" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition Width="490" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<Grid Grid.Column="1">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="260" />
+						<ColumnDefinition Width="60" />
+						<ColumnDefinition Width="170" />
+					</Grid.ColumnDefinitions>
+
+					<StackPanel Grid.Column="0" HorizontalAlignment="Stretch">
+						<Canvas Height="50">
+							<TextBlock Margin="0,12,0,0" FontFamily="Segoe UI Light" FontSize="42pt"
+							           Foreground="{DynamicResource AccentColorBrush2}"
+							           Text="{markupExtensions:LocalizedString Key=Login_Welcome,
+                                                              Fallback=Welcome}" />
+						</Canvas>
+
+						<Viewbox Width="80" Height="80" Margin="0,12,0,0" HorizontalAlignment="Left">
+							<Canvas Width="48"
+							        Height="48"
+							        Clip="F1 M 0,0L 48,0L 48,48L 0,48L 0,0"
+							        UseLayoutRounding="False">
+								<Path Canvas.Left="12"
+								      Canvas.Top="12"
+								      Width="24"
+								      Height="24"
+								      Data="F1 M 24,12C 27.5,12 29,14 28.4952,18.1979C 28.9462,18.4566 29.25,18.9428 29.25,19.5C 29.25,20.1818 28.7951,20.7574 28.1723,20.9397C 27.9121,21.8672 27.508,22.6882 27,23.3449L 27,26.5C 28.6667,26.8333 30,27 32,28C 34,29 34.6667,29.9167 36,31.25L 36,36L 12,36L 12,31.25C 13.3333,29.9167 14,29 16,28C 18,27 19.3333,26.8333 21,26.5L 21,23.3449C 20.492,22.6882 20.0879,21.8672 19.8277,20.9397C 19.2049,20.7574 18.75,20.1818 18.75,19.5C 18.75,18.9428 19.0538,18.4566 19.5048,18.1979C 19,14 20.5,12 24,12 Z "
+								      Fill="Black"
+								      Stretch="Fill" />
+							</Canvas>
+						</Viewbox>
+
+						<ComboBox Margin="0,12,0,0"
+						          ItemsSource="{Binding Path=LoginOptions}"
+						          SelectedValue="{Binding Path=SelectedLogin,Mode=TwoWay}" />
+
+						<TextBox Margin="0,12,0,0"
+						         x:Name="UserName"
+						         controls:TextBoxHelper.ClearTextButton="True"
+						         controls:TextBoxHelper.Watermark="{markupExtensions:LocalizedString Key=Login_UserName_Watermark,Fallback=User_Name}"
+						         IsEnabled="{Binding IsNetLogin}">
+
+							<i:Interaction.Behaviors>
+								<behaviors:UpdateSourceOnChangeBehavior />
+							</i:Interaction.Behaviors>
+							<i:Interaction.Triggers>
+                                <ei:KeyTrigger Key="Enter">
+                                    <actions:TargetedSetFocusAction TargetName="PassBox" />
+                                </ei:KeyTrigger>
+                            </i:Interaction.Triggers>
+						</TextBox>
+
+						<PasswordBox x:Name="PassBox" 
+                                     Margin="0,12,0,0" 
+                                     controls:TextBoxHelper.ClearTextButton="True"
+						             controls:TextBoxHelper.Watermark="{markupExtensions:LocalizedString Key=Login_EnterPassword,
+                                                                                        Fallback=Enter_Password}"
+						             behaviors:PasswordHelper.BindPassword="True"
+						             IsEnabled="{Binding IsNetLogin}">
+
+							<i:Interaction.Triggers>
+								<ei:KeyTrigger Key="Enter">
+									<actions:ExecuteCommandAction Command="{Binding Path=LoginCommand}" ManageEnableState="False" />
+								</ei:KeyTrigger>
+							</i:Interaction.Triggers>
+							<i:Interaction.Behaviors>
+                                <behaviors:UpdateSourceOnChangeBehavior />
+                                <behaviors:SelectTextOnFocusBehavior />
+							</i:Interaction.Behaviors>
+						</PasswordBox>
+
+						<TextBlock Foreground="Red"
+                                   Visibility="{Binding Path=IsLoginFailureTextVisible,Converter={StaticResource BooleanToVisibilityConverter}}"
+						           Text="{Binding LoginFailureCause}"
+                                   Margin="5"
+						            />
+					</StackPanel>
+
+					<Grid Grid.Column="2">
+						<Grid Margin="0,0,0,12" HorizontalAlignment="Stretch" VerticalAlignment="Bottom">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="10" />
+								<ColumnDefinition />
+							</Grid.ColumnDefinitions>
+							<Button Grid.Column="0"
+							        Content="{markupExtensions:LocalizedString Key=Login_SignIn,
+                                                              Fallback=Sign_in}">
+								<i:Interaction.Triggers>
+									<i:EventTrigger EventName="Click">
+										<actions:ExecuteCommandAction Command="{Binding Path=LoginCommand}" ManageEnableState="True" />
+									</i:EventTrigger>
+								</i:Interaction.Triggers>
+							</Button>
+							<Button Grid.Column="2"
+							        Content="{markupExtensions:LocalizedString Key=Login_Cancel,
+                                                              Fallback=Cancel}">
+								<i:Interaction.Triggers>
+									<i:EventTrigger EventName="Click">
+										<actions:ExecuteCommandAction Command="{Binding Path=CancelCommand}" ManageEnableState="True" />
+									</i:EventTrigger>
+								</i:Interaction.Triggers>
+							</Button>
+						</Grid>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Grid>
+
+		<Grid Background="#FF4C4C4C"
+		      Opacity="0.65"
+		      Visibility="{Binding Path=IsBusy,
+                                   Converter={StaticResource BooleanToVisibilityConverter}}">
+			<controls:ProgressRing IsActive="{Binding Path=IsBusy}" />
+		</Grid>
+	</Grid>
+</UserControl>
