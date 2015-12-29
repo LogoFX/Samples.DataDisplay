@@ -67,24 +67,24 @@
       <HintPath>..\packages\JetBrains.Annotations.10.0.0\lib\net20\JetBrains.Annotations.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LogoFX.Client.Bootstrapping, Version=1.0.3.7, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LogoFX.Client.Bootstrapping.1.0.3.7\lib\net451\LogoFX.Client.Bootstrapping.dll</HintPath>
+    <Reference Include="LogoFX.Client.Bootstrapping, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogoFX.Client.Bootstrapping.1.0.4\lib\net451\LogoFX.Client.Bootstrapping.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LogoFX.Client.Bootstrapping.Adapters.Contracts, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogoFX.Client.Bootstrapping.Adapters.Contracts.1.0.3\lib\net451\LogoFX.Client.Bootstrapping.Adapters.Contracts.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LogoFX.Client.Bootstrapping.Adapters.Unity, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LogoFX.Client.Bootstrapping.Adapters.Unity.1.0.3\lib\net451\LogoFX.Client.Bootstrapping.Adapters.Unity.dll</HintPath>
+    <Reference Include="LogoFX.Client.Bootstrapping.Adapters.Unity, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogoFX.Client.Bootstrapping.Adapters.Unity.1.0.4\lib\net451\LogoFX.Client.Bootstrapping.Adapters.Unity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LogoFX.Client.Core, Version=1.0.3.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LogoFX.Client.Core.1.0.3.1\lib\net451\LogoFX.Client.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LogoFX.Client.Modularity, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LogoFX.Client.Modularity.1.0.3.1\lib\net451\LogoFX.Client.Modularity.dll</HintPath>
+    <Reference Include="LogoFX.Client.Modularity, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogoFX.Client.Modularity.1.0.4\lib\net451\LogoFX.Client.Modularity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LogoFX.Client.Mvvm.Commanding, Version=1.0.3.1, Culture=neutral, processorArchitecture=MSIL">
@@ -103,8 +103,8 @@
       <HintPath>..\packages\LogoFX.Client.Mvvm.Model.1.0.6\lib\net451\LogoFX.Client.Mvvm.Model.Contracts.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="LogoFX.Client.Mvvm.Navigation, Version=1.0.4.2, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LogoFX.Client.Mvvm.Navigation.1.0.4.2\lib\net451\LogoFX.Client.Mvvm.Navigation.dll</HintPath>
+    <Reference Include="LogoFX.Client.Mvvm.Navigation, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LogoFX.Client.Mvvm.Navigation.1.0.4.3\lib\net451\LogoFX.Client.Mvvm.Navigation.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="LogoFX.Client.Mvvm.View.Infra, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -171,8 +171,8 @@
       <HintPath>..\packages\Solid.Practices.Composition.Desktop.1.0.5\lib\net451\Solid.Practices.Composition.Desktop.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Solid.Practices.IoC, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Solid.Practices.IoC.1.0.4.3\lib\net451\Solid.Practices.IoC.dll</HintPath>
+    <Reference Include="Solid.Practices.IoC, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Solid.Practices.IoC.1.0.5\lib\net451\Solid.Practices.IoC.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Solid.Practices.Middleware, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">

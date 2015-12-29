@@ -14,15 +14,15 @@ namespace LogoFX.Samples.Client.Presentation.Shell
     /// The bootstrapper will work with any IoC container adapter, making replacing 
     /// the IoC container easier.
     /// </summary>
-	public sealed class AppBootstrapper : NavigationBootstrapper<ShellViewModel, UnityIocContainer>
+	public sealed class AppBootstrapper : NavigationBootstrapper<ShellViewModel, UnityContainerAdapter>
 	{
         public AppBootstrapper()
-            :base(new UnityIocContainer())
+            :base(new UnityContainerAdapter())
         {
             
         }
 
-	    protected override void OnConfigure(UnityIocContainer container)
+	    protected override void OnConfigure(UnityContainerAdapter container)
 		{
             base.OnConfigure(container);            
             

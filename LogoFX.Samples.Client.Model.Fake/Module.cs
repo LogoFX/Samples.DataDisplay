@@ -6,9 +6,9 @@ using Solid.Practices.Modularity;
 namespace LogoFX.Samples.Client.Model.Fake
 { 
     [Export(typeof(ICompositionModule))]
-    class Module : ICompositionModule<UnityIocContainer>
+    class Module : ICompositionModule<UnityContainerAdapter>
     {
-        public void RegisterModule(UnityIocContainer container)
+        public void RegisterModule(UnityContainerAdapter container)
         {
             container.RegisterSingleton<ILoginService, FakeLoginService>();
             container.RegisterSingleton<IDataService, FakeDataService>();
