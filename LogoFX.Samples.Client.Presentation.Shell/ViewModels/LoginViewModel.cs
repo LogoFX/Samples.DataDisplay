@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Windows.Input;
 using Caliburn.Micro;
+using JetBrains.Annotations;
 using LogoFX.Client.Mvvm.Commanding;
 using LogoFX.Client.Mvvm.Navigation;
 using LogoFX.Samples.Client.Model.Contracts;
@@ -12,7 +13,7 @@ using LogoFX.Samples.Client.Presentation.Shell.UiServices;
 
 namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
 {        
-    [NavigationViewModel(ConductorType = typeof(ShellViewModel), IsSingleton = true)]
+    [NavigationViewModel(ConductorType = typeof(ShellViewModel), IsSingleton = true), UsedImplicitly]
     public sealed class LoginViewModel : Screen
     {
         private readonly ILoginService _loginService;
@@ -41,12 +42,12 @@ namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
             {
                 return _loginCommand ??
                     (_loginCommand = ActionCommand
-                    .When(() => !String.IsNullOrWhiteSpace(UserName))
+                    .When(() => !string.IsNullOrWhiteSpace(UserName))
                     .Do(async () =>
                     {
                         LoginFailureCause = null;
                         string password = Password;
-                        Password = String.Empty;
+                        Password = string.Empty;
 
                         IsBusy = true;
                         Exception error = null;
@@ -166,13 +167,9 @@ namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
                 _isBusy = value;
                 NotifyOfPropertyChange(() => IsBusy);
             }
-        }        
+        }
 
-        #region LoginFailureCause property
-
-        /// <summary>
-        /// LoginFailureCause property
-        /// </summary>		
+        private string _loginFailureCause;
         public string LoginFailureCause
         {
             get { return _loginFailureCause; }
@@ -185,12 +182,7 @@ namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
                 NotifyOfPropertyChange(() => LoginFailureCause);
                 NotifyOfPropertyChange(() => IsLoginFailureTextVisible);
             }
-        }
-
-        private string _loginFailureCause;
-
-
-        #endregion
+        }        
 
         public bool IsLoginFailureTextVisible
         {

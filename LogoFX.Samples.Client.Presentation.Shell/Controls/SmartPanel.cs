@@ -9,7 +9,7 @@ namespace LogoFX.Samples.Client.Presentation.Shell.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             double height = availableSize.Height;
-            if (Double.IsNaN(height) || Double.IsInfinity(height))
+            if (double.IsNaN(height) || double.IsInfinity(height))
             {
                 throw new ArgumentOutOfRangeException("availableSize");
             }

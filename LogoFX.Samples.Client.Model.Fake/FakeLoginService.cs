@@ -32,7 +32,7 @@ namespace LogoFX.Samples.Client.Model.Fake
             });
         }
 
-        public Task<bool> LogOut()
+        public Task<bool> Logout()
         {
             return Task.Factory.StartNew(() =>
             {

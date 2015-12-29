@@ -1,24 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Caliburn.Micro;
 using LogoFX.Client.Mvvm.Commanding;
 using LogoFX.Client.Mvvm.Navigation;
 using LogoFX.Samples.Client.Model.Contracts;
 using LogoFX.Samples.Client.Model.Shared;
 using LogoFX.Samples.Client.Presentation.Shell.UiServices;
+using Solid.Practices.Scheduling;
 
 namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
 {    	
-    public sealed class ShellViewModel : Conductor<IScreen>, 
-        INavigationConductor, 
-        IWindowManager,        
+    public sealed class ShellViewModel : 
+        Conductor<IScreen>, 
+        INavigationConductor,         
         IShellCloseService
 	{
 	    private readonly ILoginService _loginService;
-        private readonly INavigationService _navigationService;	    
+        private readonly INavigationService _navigationService;
+        private readonly TaskFactory _taskFactory = TaskFactoryFactory.CreateTaskFactory();
 
 	    public ShellViewModel(
             ILoginService loginService, 
@@ -40,7 +42,7 @@ namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
                            .When(() => UserContext.Current != null)
                            .Do(async () =>
                            {
-                               await _loginService.LogOut();
+                               await _loginService.Logout();
                                ActiveItem.Deactivated += OnDeactivated;
                                ActivateItem(null);
                            }));
@@ -69,39 +71,33 @@ namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
             NotifyOfPropertyChange(() => CurrentUser);            
         }
 
-        private void GotoLogin()
+        private async Task GotoLogin()
         {
-            Task.Factory.StartNew(() => Execute.BeginOnUIThread(() => _navigationService.Navigate<LoginViewModel>()));            
+            await
+                _taskFactory.StartNew(
+                    () => Dispatch.Current.BeginOnUiThread(() => _navigationService.Navigate<LoginViewModel>()));            
         }
 
-        private void OnDeactivated(object sender, DeactivationEventArgs e)
+        private async void OnDeactivated(object sender, DeactivationEventArgs e)
         {
             ((IDeactivate)sender).Deactivated -= OnDeactivated;
-            GotoLogin();
+            await GotoLogin();
         }
 
         private async void Logout()
         {
-            await _loginService.LogOut();
+            await _loginService.Logout();
             Application.Current.Shutdown();
         }
 
-	    protected override void OnActivate()
+	    protected async override void OnActivate()
         {
-            base.OnActivate();
-            ScreenExtensions.TryActivate(ChildWindow);
-            GotoLogin();
-        }
-
-        protected override void OnViewLoaded(object view)
-        {
-            base.OnViewLoaded(view);
-            GC.Collect();
+            base.OnActivate();            
+            await GotoLogin();
         }
 
         protected override void OnDeactivate(bool close)
-        {
-            ScreenExtensions.TryDeactivate(ChildWindow, close);
+        {           
             base.OnDeactivate(close);
 // ReSharper disable DelegateSubtraction
             UserContext.CurrentChanged -= CurrentChanged;
@@ -127,68 +123,19 @@ namespace LogoFX.Samples.Client.Presentation.Shell.ViewModels
 	    public void NavigateTo(object viewModel, object argument)
         {
             ActivateItem((IScreen)viewModel);
-        }
+        }	   
 
-	    private ChildWindowViewModel _childWindow;
-        public ChildWindowViewModel ChildWindow
-        {
-            get { return _childWindow; }
-            set
-            {
-                if (_childWindow == value)
-                {
-                    return;
-                }
-
-                if (_childWindow != null)
-                {
-                    ScreenExtensions.TryDeactivate(_childWindow, true);
-                }
-
-                _childWindow = value;
-
-                if (_childWindow != null)
-                {
-                    ScreenExtensions.TryActivate(_childWindow);
-                }
-
-                NotifyOfPropertyChange();
-            }
-        }
-
-        private Task<bool?> ShowWindowAsync(object rootModel, object context, IDictionary<string, object> settings)
-        {
-            var taskCompletionSource = new TaskCompletionSource<bool?>();
-            ChildWindow = new ChildWindowViewModel(rootModel, context, taskCompletionSource);
-
-            Task.Factory.StartNew(() =>
-            {
-                taskCompletionSource.Task.Wait();
-                ChildWindow = null;
-            });            
-
-            return taskCompletionSource.Task;
-        }
-
-        public bool? ShowDialog(object rootModel, object context = null, IDictionary<string, object> settings = null)
-        {
-            bool? result = ShowWindowAsync(rootModel, context, settings).Result;
-            return result;
-        }
-
-        public async void ShowWindow(object rootModel, object context = null, IDictionary<string, object> settings = null)
-        {
-            await ShowWindowAsync(rootModel, context, settings);
-        }
-
-        public void ShowPopup(object rootModel, object context = null, IDictionary<string, object> settings = null)
-        {
-            throw new NotImplementedException();
-        }
-
-	    public void Close()
+	    public async void Close()
 	    {
-	        TryClose();
+	        await CloseAsync();
 	    }
+
+        private async Task CloseAsync()
+        {
+            await _taskFactory.StartNew(() => Dispatch.Current.OnUiThread(() =>
+            {
+                TryClose();
+            }));
+        }
 	}
 }
